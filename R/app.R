@@ -468,7 +468,7 @@ server <- function(input, output) {
        
        #rsim.plot(GOM.run1, gom.groups)
        #same code as rsim.plot but for catch, and subset by selected groups
-       bio <- GOM.run1$out_BB[, 2:ncol(GOM.run1$out_BB)]
+       bio <- GOM.run1$out_Biomass[, 2:ncol(GOM.run1$out_Biomass)]
        bio <- bio[,colnames(bio) %in% input$plotGroups]
        
        n <- ncol(bio)
@@ -704,7 +704,7 @@ server <- function(input, output) {
        )
        
        #same code as rsim.plot but for catch, and subset by selected groups
-       catch <- GOM.run1$out_CC[, 2:ncol(GOM.run1$out_CC)]
+       catch <- GOM.run1$out_Catch[, 2:ncol(GOM.run1$out_Catch)]
        catch <- catch[,colnames(catch) %in% input$plotGroups]
        catch <- catch[,colSums(catch) > 0]
        n <- ncol(catch)

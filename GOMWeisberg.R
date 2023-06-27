@@ -94,14 +94,14 @@ webplot(GOM, highlight = "AtlHerring", labels = T)
 #Check sim
 gom.base <- rsim.scenario(GOM, gom.par, 1:100)
 gom.run <- rsim.run(gom.base)
-rsim.plot(gom.run, gom.groups[1:58])
+rsim.plot(gom.run, gom.groups[1:57])
 
 #scenario plots
 GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Pelagic',
                          value =2, sim.year = 25:100)
 
 GOM.run1 <- rsim.run(GOM.b2)
-rsim.plot(GOM.run1, gom.groups[1:58])
+rsim.plot(GOM.run1, gom.groups[1:57])
 
 
 
