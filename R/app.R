@@ -313,6 +313,36 @@ ui <- fluidPage(
                                     max = 5,
                                     value = 1,
                                     step = 0.2),
+                        # sliderInput("hrateFixed",
+                        #             "Relative Fixed gear fleet fishing effort:",
+                        #             min = 0,
+                        #             max = 5,
+                        #             value = 1,
+                        #             step = 0.2),
+                        # sliderInput("hrateHMS",
+                        #             "Relative Tuna/Billfish/Shark fleet fishing effort:",
+                        #             min = 0,
+                        #             max = 5,
+                        #             value = 1,
+                        #             step = 0.2),
+                        # sliderInput("hrateLGmesh",
+                        #             "Relative Demersal large mesh fleet fishing effort:",
+                        #             min = 0,
+                        #             max = 5,
+                        #             value = 1,
+                        #             step = 0.2),
+                        # sliderInput("hrateSMmesh",
+                        #             "Relative Demersal small mesh fleet fishing effort:",
+                        #             min = 0,
+                        #             max = 5,
+                        #             value = 1,
+                        #             step = 0.2),
+                        # sliderInput("hrateTrap",
+                        #             "Relative Trap fleet fishing effort:",
+                        #             min = 0,
+                        #             max = 5,
+                        #             value = 1,
+                        #             step = 0.2),
                         sliderInput("herringZ",
                                     "Mortality, Atlantic herring:",
                                     min = 0,
@@ -419,23 +449,23 @@ server <- function(input, output) {
      }
      if(input$model == "Gulf of Maine"){
        #Change fishing effort
-       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Fixed Gear',
-       #                          value = input$hrateFishery, sim.year = 25:100)
-       # #Change fishing effort
-       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'HMS Fleet',
-       #                          value = input$hrateFishery, sim.year = 25:100)
-       # #Change fishing effort
-       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'LG Mesh',
-       #                          value = input$hrateFishery, sim.year = 25:100)
-       # #Change fishing effort
-       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Trap',
-       #                          value = input$hrateFishery, sim.year = 25:100)
-       #Change fishing effort
        GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Pelagic',
                                 value = input$hrateFishery, sim.year = 25:100)
        # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Fixed Gear',
+       #                          value = input$hrateFixed, sim.year = 25:100)
+       # # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'HMS Fleet',
+       #                          value = input$hrateHMS, sim.year = 25:100)
+       # # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'LG Mesh',
+       #                          value = input$hrateLGmesh, sim.year = 25:100)
+       # # #Change fishing effort
        # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'SM Mesh',
-       #                          value = input$hrateFishery, sim.year = 25:100)
+       #                          value = input$hrateSMmesh, sim.year = 25:100)
+       # # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Trap',
+       #                          value = input$hrateTrap, sim.year = 25:100)
 
               
        #Change herring mort (commercial small pelagics in GOM mostly herring)
@@ -671,9 +701,23 @@ server <- function(input, output) {
      #        title='Fleet')
      }
      if(input$model == "Gulf of Maine"){
-       #Change fishing effort
        GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Pelagic',
                                 value = input$hrateFishery, sim.year = 25:100)
+       # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Fixed Gear',
+       #                          value = input$hrateFixed, sim.year = 25:100)
+       # # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'HMS Fleet',
+       #                          value = input$hrateHMS, sim.year = 25:100)
+       # # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'LG Mesh',
+       #                          value = input$hrateLGmesh, sim.year = 25:100)
+       # # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'SM Mesh',
+       #                          value = input$hrateSMmesh, sim.year = 25:100)
+       # # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Trap',
+       #                          value = input$hrateTrap, sim.year = 25:100)
        
        #Change herring mort (commercial small pelagics in GOM mostly herring)
        GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'AtlHerring',
@@ -769,9 +813,23 @@ server <- function(input, output) {
        print(AB.run7)
      }
      if(input$model == "Gulf of Maine"){
-       #Change fishing effort
        GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Pelagic',
                                 value = input$hrateFishery, sim.year = 25:100)
+       # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Fixed Gear',
+       #                          value = input$hrateFixed, sim.year = 25:100)
+       # # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'HMS Fleet',
+       #                          value = input$hrateHMS, sim.year = 25:100)
+       # # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'LG Mesh',
+       #                          value = input$hrateLGmesh, sim.year = 25:100)
+       # # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'SM Mesh',
+       #                          value = input$hrateSMmesh, sim.year = 25:100)
+       # # #Change fishing effort
+       # GOM.b2 <- adjust.fishing(gom.base, parameter = 'ForcedEffort', group = 'Trap',
+       #                          value = input$hrateTrap, sim.year = 25:100)
        
        #Change herring mort (commercial small pelagics in GOM mostly herring)
        GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'AtlHerring',
