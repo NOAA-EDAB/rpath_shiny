@@ -222,7 +222,8 @@ AB.run1 <- rsim.run(AB.base, method = 'AB', 1:25)
 
 # Gulf of Maine by Sarah Weisberg
 
-load(here("GOM_params_Rpath.RData"))  #GOM.params, stored locally
+#load(here("GOM_params_Rpath.RData"))  #GOM.params, stored locally
+load("GOM_params_Rpath.RData")
 
 gom.par <- GOM.params
 
@@ -498,8 +499,8 @@ server <- function(input, output) {
        
        #rsim.plot(GOM.run1, gom.groups)
        #same code as rsim.plot but for catch, and subset by selected groups
-       bio <- GOM.run1$out_Biomass[, 2:ncol(GOM.run1$out_Biomass)]
-       bio <- bio[,colnames(bio) %in% input$plotGroups]
+       bio <- GOM.run1$out_Biomass[, colnames(GOM.run1$out_Biomass) %in% input$plotGroups]
+      # bio <- bio[,colnames(bio) %in% input$plotGroups]
        
        n <- ncol(bio)
        spname <- colnames(bio)
