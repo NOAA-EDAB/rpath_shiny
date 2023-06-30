@@ -10,7 +10,7 @@
 library(shiny)
 #devtools::install_github('slucey/RpathDev/Rpath', ref = 'Public')
 library(data.table); library(Rpath); library(ggplot2); library(forcats); library(tidyverse);
-library(shinyWidgets); library(here)
+library(shinyWidgets); library(DT)
 
 #-------------------------------------------------------------------------------
 #User created functions
@@ -308,6 +308,7 @@ ui <- fluidPage(
                                     choices = c(unique(GOM$Group)), selected = c(unique(GOM$Group)),
                                     multiple = TRUE, options = list(`actions-box` = TRUE), choicesOpt = NULL,
                                     width = NULL, inline = FALSE),
+                        helpText("Change fishing effort by fleet"),
                         sliderInput("hrateFishery",
                                     "Relative Pelagic fleet fishing effort:",
                                     min = 0,
@@ -344,6 +345,7 @@ ui <- fluidPage(
                         #             max = 5,
                         #             value = 1,
                         #             step = 0.2),
+                        helpText("Change mortality by species"),
                         sliderInput("herringZ",
                                     "Mortality, Atlantic herring:",
                                     min = 0,
@@ -374,6 +376,7 @@ ui <- fluidPage(
                                     max = 5,
                                     value = 1,
                                     step = 0.2),
+                        helpText("Change vulnerability of species"),
                         sliderInput("herringprey",
                                     "Atlantic herring as prey:",
                                     min = 0,
@@ -402,7 +405,8 @@ ui <- fluidPage(
                              
                              plotOutput("catplot3")),#,
                     # tabPanel("Summary", verbatimTextOutput("summary")),
-                    tabPanel("Summary Table", tableOutput("table"))
+                    #tabPanel("Summary Table", tableOutput("table"))
+                    tabPanel("Summary Table", DTOutput("table"))
         )
         #plotOutput("EwEplot")
       ) #end main panel
@@ -458,7 +462,7 @@ server <- function(input, output) {
        # # #Change fishing effort
        # GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'HMS Fleet',
        #                          value = input$hrateHMS, sim.year = 25:100)
-       # #Change fishing effort
+       #Change fishing effort
        GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'LG Mesh',
                                 value = input$hrateLGmesh, sim.year = 25:100)
        # # #Change fishing effort
@@ -790,7 +794,8 @@ server <- function(input, output) {
      }
    })
    
-   output$table <- renderTable({
+   #output$table <- renderTable({
+   output$table <-   renderDT({
      if(input$model == "Anchovy Bay"){
        AB.b2 <- adjust.fishing(AB.base, parameter = 'EFFORT', group = 'trawlers',
                                value = input$hrateT, sim.year = 8:25)
@@ -822,7 +827,7 @@ server <- function(input, output) {
        # # #Change fishing effort
        # GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'HMS Fleet',
        #                          value = input$hrateHMS, sim.year = 25:100)
-       # #Change fishing effort
+       #Change fishing effort
        GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'LG Mesh',
                                 value = input$hrateLGmesh, sim.year = 25:100)
        # # #Change fishing effort
