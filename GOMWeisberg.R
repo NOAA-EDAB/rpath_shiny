@@ -104,4 +104,6 @@ GOM.run1 <- rsim.run(GOM.b2)
 rsim.plot(GOM.run1, gom.groups[1:57])
 
 
+GOM.b2 <- adjust.forcing(gom.base, parameter = 'ForcedMort', group = 'Phytoplankton',
+                         value =0.5, sim.year = 25:100)
 

@@ -339,13 +339,31 @@ ui <- fluidPage(
                         #             max = 5,
                         #             value = 1,
                         #             step = 0.2),
-                        # sliderInput("hrateTrap",
-                        #             "Relative Trap fleet fishing effort:",
-                        #             min = 0,
-                        #             max = 5,
-                        #             value = 1,
-                        #             step = 0.2),
+                        sliderInput("hrateTrap",
+                                     "Relative Trap fleet fishing effort:",
+                                     min = 0,
+                                     max = 5,
+                                     value = 1,
+                                     step = 0.2),
                         helpText("Change mortality by species"),
+                        sliderInput("phytoZ",
+                                    "Phytoplankton mortality:",
+                                    min = 0,
+                                    max = 2,
+                                    value = 1,
+                                    step = 0.1),
+                        sliderInput("smcopZ",
+                                    "Mortality, Small copepods:",
+                                    min = 0,
+                                    max = 5,
+                                    value = 1,
+                                    step = 0.2),
+                        sliderInput("lgcopZ",
+                                    "Mortality, Large copepods:",
+                                    min = 0,
+                                    max = 5,
+                                    value = 1,
+                                    step = 0.2),
                         sliderInput("herringZ",
                                     "Mortality, Atlantic herring:",
                                     min = 0,
@@ -372,6 +390,12 @@ ui <- fluidPage(
                                     step = 0.2),
                         sliderInput("seabirdZ",
                                     "Mortality, Seabirds:",
+                                    min = 0,
+                                    max = 5,
+                                    value = 1,
+                                    step = 0.2),
+                        sliderInput("pinnipedZ",
+                                    "Mortality, Pinnipeds:",
                                     min = 0,
                                     max = 5,
                                     value = 1,
@@ -468,10 +492,21 @@ server <- function(input, output) {
        # # #Change fishing effort
        # GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'SM Mesh',
        #                          value = input$hrateSMmesh, sim.year = 25:100)
-       # # #Change fishing effort
-       # GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'Trap',
-       #                          value = input$hrateTrap, sim.year = 25:100)
+       # #Change fishing effort
+       GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'Trap',
+                                value = input$hrateTrap, sim.year = 25:100)
+       
+       # Change phytoplankton mort
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'Phytoplankton',
+                                value = input$phytoZ, sim.year = 25:100)
+       
+       #Change zooplankton mort 
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'SmCopepods',
+                                value = input$smcopZ, sim.year = 25:100)
 
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'LgCopepods',
+                                value = input$lgcopZ, sim.year = 25:100)
+       
               
        #Change herring mort (commercial small pelagics in GOM mostly herring)
        GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'AtlHerring',
@@ -490,6 +525,10 @@ server <- function(input, output) {
        #Change seabird mort
        GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'SeaBirds',
                                 value = input$seabirdZ, sim.year = 25:100)
+       
+       #Change pinniped mort
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'Pinnipeds',
+                                value = input$pinnipedZ, sim.year = 25:100)
        
        #Change herring as prey
        GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedPrey', group = 'AtlHerring',
@@ -720,9 +759,18 @@ server <- function(input, output) {
        # # #Change fishing effort
        # GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'SM Mesh',
        #                          value = input$hrateSMmesh, sim.year = 25:100)
-       # # #Change fishing effort
-       # GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'Trap',
-       #                          value = input$hrateTrap, sim.year = 25:100)
+       # #Change fishing effort
+       GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'Trap',
+                                value = input$hrateTrap, sim.year = 25:100)
+       # Change phytoplankton mort
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'Phytoplankton',
+                                value = input$phytoZ, sim.year = 25:100)
+       #Change zooplankton mort 
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'SmCopepods',
+                                value = input$smcopZ, sim.year = 25:100)
+       
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'LgCopepods',
+                                value = input$lgcopZ, sim.year = 25:100)
        
        #Change herring mort (commercial small pelagics in GOM mostly herring)
        GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'AtlHerring',
@@ -741,6 +789,9 @@ server <- function(input, output) {
        #Change seabird mort
        GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'SeaBirds',
                                 value = input$seabirdZ, sim.year = 25:100)
+       #Change pinniped mort
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'Pinnipeds',
+                                value = input$pinnipedZ, sim.year = 25:100)
        
        #Change herring as prey
        GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedPrey', group = 'AtlHerring',
@@ -833,9 +884,18 @@ server <- function(input, output) {
        # # #Change fishing effort
        # GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'SM Mesh',
        #                          value = input$hrateSMmesh, sim.year = 25:100)
-       # # #Change fishing effort
-       # GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'Trap',
-       #                          value = input$hrateTrap, sim.year = 25:100)
+       # #Change fishing effort
+       GOM.b2 <- adjust.fishing(GOM.b2, parameter = 'ForcedEffort', group = 'Trap',
+                                value = input$hrateTrap, sim.year = 25:100)
+       # Change phytoplankton mort
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'Phytoplankton',
+                                value = input$phytoZ, sim.year = 25:100)
+       #Change zooplankton mort 
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'SmCopepods',
+                                value = input$smcopZ, sim.year = 25:100)
+       
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'LgCopepods',
+                                value = input$lgcopZ, sim.year = 25:100)
        
        #Change herring mort (commercial small pelagics in GOM mostly herring)
        GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'AtlHerring',
@@ -855,6 +915,9 @@ server <- function(input, output) {
        #Change seabird mort
        GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'SeaBirds',
                                 value = input$seabirdZ, sim.year = 25:100)
+       #Change pinniped mort
+       GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedMort', group = 'Pinnipeds',
+                                value = input$pinnipedZ, sim.year = 25:100)
        
        #Change herring as prey
        GOM.b2 <- adjust.forcing(GOM.b2, parameter = 'ForcedPrey', group = 'AtlHerring',
