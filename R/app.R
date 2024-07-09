@@ -371,7 +371,7 @@ ui <- fluidPage(
                                     value = 1,
                                     step = 0.2),
                         sliderInput("squidZ",
-                                    "Mortality, Shortfin squid:",
+                                    "Mortality, Longfin squid:",
                                     min = 0,
                                     max = 5,
                                     value = 1,
